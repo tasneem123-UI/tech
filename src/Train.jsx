@@ -1,84 +1,179 @@
-import React from 'react';
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-// مكون بطاقة المدرب القابل لإعادة الاستخدام
-const TrainerCard = ({ name, course, comment, imageUrl }) => {
-  return (
-    <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
-      <a href="#" className="block rounded-md border border-gray-300 p-4 shadow-sm hover:shadow-md transition-shadow">
-        <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
-          <div className="sm:order-last sm:shrink-0">
-            <img
-              alt={name}
-              src={imageUrl}
-              className="size-12 rounded-full object-cover sm:size-16"
-            />
-          </div>
+function TrainerReviewsSlider() {
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    initialSlide: 0,
+    rtl: true, // Right-to-left for Arabic
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
 
-          <div className="mt-4 sm:mt-0">
-            <h3 className="text-lg font-semibold text-gray-900">{name}</h3>
-            <p className="mt-1 text-sm text-gray-700">{course}</p>
-            <p className="mt-3 text-sm text-gray-700 line-clamp-2">
-              {comment}
-            </p>
-          </div>
-        </div>
-        
-        <div className="mt-3 flex justify-center">
-          {[...Array(4)].map((_, i) => (
-            <StarIcon key={i} />
-          ))}
-        </div>
-      </a>
-    </div>
-  );
-};
-
-// مكون نجمة منفصل لإعادة الاستخدام
-const StarIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5 text-yellow-400">
-    <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
-  </svg>
-);
-
-export default function Train() {
   const trainers = [
     {
-      name: "محمود طه عمرو",
-      course: "Flutter كورس",
-      comment: "كورس مفيد جدا واتعلمت منه حاجات كتيرةوحقيقي ناس عندها خبرة كبيرة وبيعرفوا يوصلوا المعلومه بصوره سهله وبسيطه",
-      imageUrl: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+      id: 1,
+      name: "شهاب أحمد محمد",
+      course: "تطوير الواجهات الأمامية",
+      review: "كورس ممتاز ساعدني في تطوير مهاراتي بشكل كبير",
+      rating: 5,
+      image: require("./Assets/john.png")
     },
     {
-      name: "شهد احمد محمد",
-      course: "Front-end كورس",
-      comment: "كورس مفيد جدا واتعلمت منه حاجات كتيرةوحقيقي ناس عندها خبرة كبيرة وبيعرفوا يوصلوا المعلومه بصوره سهله وبسيطه",
-      imageUrl: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+      id: 2,
+      name: "محمد علي حسين",
+      course: "برمجة Flutter",
+      review: "المحتوى غني بالمعلومات والأمثلة العملية",
+      rating: 4,
+      image: require("./Assets/john.png")
     },
     {
-      name: "مدرب آخر",
-      course: "Front-end كورس",
-      comment: "كورس مفيد جدا واتعلمت منه حاجات كتيرةوحقيقي ناس عندها خبرة كبيرة وبيعرفوا يوصلوا المعلومه بصوره سهله وبسيطه",
-      imageUrl: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+      id: 3,
+      name: "نور خالد",
+      course: "تطوير تطبيقات iOS",
+      review: "شرح واضح وشامل للمبتدئين والمتقدمين",
+      rating: 5,
+      image: require("./Assets/john.png")
+    },
+    {
+      id: 4,
+      name: "أحمد سمير",
+      course: "أمن المعلومات",
+      review: "أفضل استثمار قمت به في تطوير مسيرتي المهنية",
+      rating: 5,
+      image: require("./Assets/john.png")
+    },
+    {
+      id: 5,
+      name: "ليلى مصطفى",
+      course: "تعلم الآلة",
+      review: "المدرب خبير في المجال وشرحه مميز",
+      rating: 4,
+      image: require("./Assets/john.png")
+    },
+    {
+      id: 6,
+      name: "يوسف عمر",
+      course: "تحليل البيانات",
+      review: "الكورس غير طريقة عملي في تحليل البيانات",
+      rating: 5,
+      image: require("./Assets/john.png")
+    },
+    {
+      id: 7,
+      name: "سامر ناصر",
+      course: "التسويق الرقمي",
+      review: "محتوى عملي يمكن تطبيقه مباشرة",
+      rating: 4,
+      image: require("./Assets/john.png")
+    },
+    {
+      id: 8,
+      name: "خالد وليد",
+      course: "إدارة المشاريع",
+      review: "زاد من كفاءتي في إدارة الفرق والمشاريع",
+      rating: 5,
+      image: require("./Assets/abd_ulrahman.png")
+    },
+    {
+      id: 9,
+      name: "رايم عبدالرحمن",
+      course: "التصميم الجرافيكي",
+      review: "تعلمت أدوات ومهارات جديدة ساعدتني في عملي",
+      rating: 5,
+      image: require("./Assets/mina.png")
+    },
+    {
+      id: 10,
+      name: "فارس نادر",
+      course: "برمجة الألعاب",
+      review: "تجربة رائعة مع مدرب متمكن وخبير",
+      rating: 5,
+      image: require("./Assets/john.png")
     }
   ];
 
-  return ( 
-    <div className='py-8 px-4'>
-      <h1 className="font-bold text-4xl text-blue-600 text-center mb-8">
-        بعض آراء المدربين
-      </h1>
-     
-      <div className="flex flex-wrap justify-center -mx-4">
-        {trainers.map((trainer, index) => (
-          <TrainerCard
-            key={index}
-            name={trainer.name}
-            course={trainer.course}
-            comment={trainer.comment}
-            imageUrl={trainer.imageUrl}
-          />
-        ))}
+  const renderStars = (rating) => {
+    return [...Array(5)].map((_, i) => (
+      <svg
+        key={i}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill={i < rating ? "currentColor" : "none"}
+        stroke="currentColor"
+        className={`w-5 h-5 ${i < rating ? "text-yellow-400" : "text-gray-300"}`}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+        />
+      </svg>
+    ));
+  };
+
+  return (
+    <div className="py-12 px-4 bg-gray-50" dir="rtl">
+      <h1 className="text-4xl font-bold text-center mb-12 text-blue-800">آراء المتدربين عن المدربين</h1>
+      
+      <div className="slider-container mx-auto max-w-7xl">
+        <Slider {...settings}>
+          {trainers.map((trainer) => (
+            <div key={trainer.id} className="px-3">
+              <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full flex flex-col">
+                <div className="flex items-center mb-4 ">
+                  <img 
+                    src={trainer.image} 
+                    alt={trainer.name} 
+                    className="w-16 h-16 rounded-full object-cover border-2 border-blue-200 mx-4"
+                  />
+                  <div className="mr-3">
+                    <h3 className="text-xl font-bold text-gray-800">{trainer.name}</h3>
+                    <h4 className="text-md text-blue-600">{trainer.course}</h4>
+                  </div>
+                </div>
+                <p className="text-gray-600 mb-4 flex-grow">{trainer.review}</p>
+                <div className="flex justify-center mt-auto">
+                  <div className="flex">{renderStars(trainer.rating)}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </div>
     </div>
   );
 }
+
+export default TrainerReviewsSlider;
